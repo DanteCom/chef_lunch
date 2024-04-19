@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:chef_lunch/services/auth/auth_service.dart';
 import 'package:chef_lunch/components/my_button.dart';
 import 'package:chef_lunch/components/my_thextfiled.dart';
@@ -56,68 +54,77 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
         children: [
-          Icon(
-            Icons.lock_open_rounded,
-            size: 100,
-            color: Theme.of(context).colorScheme.inversePrimary,
-          ),
-          const SizedBox(height: 25),
-          Text(
-            'Let\'s create an account for you',
-            style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).colorScheme.inversePrimary,
-            ),
-          ),
-          const SizedBox(height: 25),
-          MyTextFiled(
-            controller: emailController,
-            hintText: 'Email',
-            obscureText: false,
-          ),
-          const SizedBox(height: 10),
-          MyTextFiled(
-            controller: passwordController,
-            hintText: 'Password',
-            obscureText: true,
-          ),
-          const SizedBox(height: 10),
-          MyTextFiled(
-            controller: confirmPasswordController,
-            hintText: 'Confirm password',
-            obscureText: true,
-          ),
-          const SizedBox(height: 25),
-          MyButton(
-            text: 'Sign Up',
-            onTab: register,
-          ),
-          const SizedBox(height: 25),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'already have an account?',
-                style: TextStyle(
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                Icon(
+                  Icons.lock_open_rounded,
+                  size: 100,
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
-              ),
-              const SizedBox(width: 10),
-              GestureDetector(
-                onTap: widget.onTab,
-                child: Text(
-                  'Login now',
+                const SizedBox(height: 25),
+                Text(
+                  'Let\'s create an account for you',
                   style: TextStyle(
+                    fontSize: 16,
                     color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-            ],
-          )
+                const SizedBox(height: 25),
+                MyTextFiled(
+                  controller: emailController,
+                  hintText: 'Email',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10),
+                MyTextFiled(
+                  controller: passwordController,
+                  hintText: 'Password',
+                  obscureText: true,
+                ),
+                const SizedBox(height: 10),
+                MyTextFiled(
+                  controller: confirmPasswordController,
+                  hintText: 'Confirm password',
+                  obscureText: true,
+                ),
+                const SizedBox(height: 25),
+                MyButton(
+                  text: 'Sign Up',
+                  onTab: register,
+                ),
+                const SizedBox(height: 25),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'already have an account?',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: widget.onTab,
+                      child: Text(
+                        'Login now',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+              ],
+            ),
+          ),
         ],
       ),
     );

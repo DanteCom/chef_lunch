@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:chef_lunch/services/auth/auth_service.dart';
 import 'package:chef_lunch/components/my_button.dart';
 import 'package:chef_lunch/components/my_thextfiled.dart';
@@ -27,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
       );
     } catch (e) {
       showDialog(
+        // ignore: use_build_context_synchronously
         context: context,
         builder: (context) => AlertDialog(
           title: Center(
@@ -44,62 +43,71 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
         children: [
-          Icon(
-            Icons.lock_open_rounded,
-            size: 100,
-            color: Theme.of(context).colorScheme.inversePrimary,
-          ),
-          const SizedBox(height: 25),
-          Text(
-            'Chef Lunch',
-            style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).colorScheme.inversePrimary,
-            ),
-          ),
-          const SizedBox(height: 25),
-          MyTextFiled(
-            controller: emailController,
-            hintText: 'Email',
-            obscureText: false,
-          ),
-          const SizedBox(height: 10),
-          MyTextFiled(
-            controller: passwordController,
-            hintText: 'Password',
-            obscureText: true,
-          ),
-          const SizedBox(height: 25),
-          MyButton(
-            text: 'Sign',
-            onTab: login,
-          ),
-          const SizedBox(height: 25),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Not a nember?',
-                style: TextStyle(
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                Icon(
+                  Icons.lock_open_rounded,
+                  size: 100,
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
-              ),
-              const SizedBox(width: 10),
-              GestureDetector(
-                onTap: widget.onTab,
-                child: Text(
-                  'Register now',
+                const SizedBox(height: 25),
+                Text(
+                  'Chef Lunch',
                   style: TextStyle(
+                    fontSize: 16,
                     color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-            ],
-          )
+                const SizedBox(height: 25),
+                MyTextFiled(
+                  controller: emailController,
+                  hintText: 'Email',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10),
+                MyTextFiled(
+                  controller: passwordController,
+                  hintText: 'Password',
+                  obscureText: true,
+                ),
+                const SizedBox(height: 25),
+                MyButton(
+                  text: 'Sign',
+                  onTab: login,
+                ),
+                const SizedBox(height: 25),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Not a nember?',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: widget.onTab,
+                      child: Text(
+                        'Register now',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+              ],
+            ),
+          ),
         ],
       ),
     );
