@@ -1,9 +1,11 @@
 class MenuModel {
+  final int id;
   final String name;
-  final String price;
+  final int price;
   final String image;
 
   MenuModel({
+    required this.id,
     required this.name,
     required this.price,
     required this.image,
@@ -11,6 +13,7 @@ class MenuModel {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
+      'id': id,
       'name': name,
       'price': price,
       'image': image,
@@ -19,8 +22,9 @@ class MenuModel {
 
   factory MenuModel.fromJson(Map<String, dynamic> map) {
     return MenuModel(
+      id: map['id'] as int,
       name: map['name'] as String,
-      price: map['price'] as String,
+      price: map['price'] as int,
       image: map['image'] as String,
     );
   }

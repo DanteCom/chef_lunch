@@ -1,15 +1,12 @@
+import 'package:chef_lunch/models/menu_model.dart';
 import 'package:flutter/material.dart';
 
 class MyMenuCard extends StatelessWidget {
-  final String image;
-  final String name;
-  final String price;
+  final MenuModel foodInfo;
   final void Function()? onTab;
   const MyMenuCard({
     super.key,
-    required this.image,
-    required this.name,
-    required this.price,
+    required this.foodInfo,
     required this.onTab,
   });
 
@@ -27,7 +24,7 @@ class MyMenuCard extends StatelessWidget {
         child: Column(
           children: [
             Image.network(
-              image,
+              foodInfo.image,
               width: double.infinity,
               height: 200,
               fit: BoxFit.cover,
@@ -38,7 +35,7 @@ class MyMenuCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    name,
+                    foodInfo.name,
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 15,
@@ -46,7 +43,7 @@ class MyMenuCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '\$$price',
+                    '\$${foodInfo.price}',
                     style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 15,

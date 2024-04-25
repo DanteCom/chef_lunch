@@ -1,18 +1,14 @@
 import 'package:chef_lunch/components/my_button.dart';
+import 'package:chef_lunch/models/menu_model.dart';
 import 'package:chef_lunch/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FoodPage extends StatefulWidget {
-  final Function onTap;
-  final String image;
-  final String name;
-  final String price;
+  final MenuModel foodInfo;
   const FoodPage({
     super.key,
-    required this.image,
-    required this.name,
-    required this.price,
-    required this.onTap,
+    required this.foodInfo,
   });
 
   @override
@@ -20,15 +16,28 @@ class FoodPage extends StatefulWidget {
 }
 
 class _FoodPageState extends State<FoodPage> {
-  CartProvider cartProvider = CartProvider();
+  int quantity = 1;
+
+  void increment() {
+    quantity++;
+    setState(() {});
+  }
+
+  void decrement() {
+    if (quantity != 1) {
+      quantity--;
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
+    final stateCart = context.watch<CartProvider>();
     return Scaffold(
       body: Column(
         children: [
           Image.network(
-            widget.image,
+            widget.foodInfo.image,
             width: double.infinity,
             height: 350,
             fit: BoxFit.cover,
@@ -41,7 +50,7 @@ class _FoodPageState extends State<FoodPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.name,
+                    widget.foodInfo.name,
                     style: const TextStyle(
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
@@ -52,8 +61,7 @@ class _FoodPageState extends State<FoodPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          cartProvider.decrement();
-                          setState(() {});
+                          decrement();
                         },
                         child: Container(
                           width: 32,
@@ -75,7 +83,7 @@ class _FoodPageState extends State<FoodPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: Text(
-                          cartProvider.quantity.toString(),
+                          quantity.toString(),
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w500,
@@ -84,8 +92,7 @@ class _FoodPageState extends State<FoodPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          cartProvider.increment();
-                          setState(() {});
+                          increment();
                         },
                         child: Container(
                           width: 32,
@@ -105,7 +112,7 @@ class _FoodPageState extends State<FoodPage> {
                       ),
                       const Spacer(),
                       Text(
-                        '\$${widget.price.toString()}',
+                        '\$${widget.foodInfo.price}',
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w500,
@@ -139,7 +146,7 @@ class _FoodPageState extends State<FoodPage> {
           ),
           MyButton(
             onTab: () {
-              cartProvider.addToCart();
+              stateCart.addToCart(widget.foodInfo, quantity);
               Navigator.pop(context);
             },
             text: 'Add Cart',

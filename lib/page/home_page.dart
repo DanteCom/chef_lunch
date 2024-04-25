@@ -1,6 +1,7 @@
 import 'package:chef_lunch/components/my_drawer.dart';
 import 'package:chef_lunch/components/my_menu_card.dart';
 import 'package:chef_lunch/page/cart_page.dart';
+import 'package:chef_lunch/page/food_page.dart';
 import 'package:chef_lunch/providers/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foodList = context.watch<HomeProvider>().menuList;
+    final state = context.watch<HomeProvider>();
+    final foodList = state.menuList;
     return Scaffold(
       drawer: const MyDrawer(),
       appBar: AppBar(
@@ -35,16 +37,39 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: ListView.separated(
-        itemBuilder: (context, index) => MyMenuCard(
-          image: foodList[index].image.toString(),
-          name: foodList[index].name.toString(),
-          price: foodList[index].price.toString(),
-          onTab: () {},
-        ),
-        separatorBuilder: (context, index) => const SizedBox(height: 25),
-        itemCount: foodList.length,
-      ),
+      body: state.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : foodList.isEmpty
+              ? const Center(
+                  child: Text(
+                    'No Foods avialable',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                  ),
+                )
+              : ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 12)
+                      .copyWith(top: 15),
+                  itemCount: foodList.length,
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 15),
+                  itemBuilder: (context, index) => MyMenuCard(
+                    foodInfo: foodList[index],
+                    onTab: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FoodPage(
+                            foodInfo: foodList[index],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
     );
   }
 }
