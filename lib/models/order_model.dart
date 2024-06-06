@@ -6,6 +6,8 @@ class OrderModel {
   final String location;
   final String phone;
   final String data;
+  final String? orderId;
+  final String? token;
   final int totalPrice;
   OrderModel({
     required this.foodInfo,
@@ -14,6 +16,8 @@ class OrderModel {
     required this.phone,
     required this.data,
     required this.totalPrice,
+    this.token,
+    this.orderId,
   });
 
   Map<String, dynamic> toJson() {
@@ -24,16 +28,18 @@ class OrderModel {
       'phone': phone,
       'data': data,
       'totalPrice': totalPrice,
+      'token': token
     };
   }
 
-  factory OrderModel.fromJson(Map<String, dynamic> map) {
+  factory OrderModel.fromJson(Map<String, dynamic> map, String orderId) {
     return OrderModel(
       foodInfo: List<CartModel>.from(
         (map['foodInfo'] as List<dynamic>).map<CartModel>(
           (x) => CartModel.fromJson(x as Map<String, dynamic>),
         ),
       ),
+      orderId: orderId,
       userId: map['userId'] as String,
       location: map['location'] as String,
       phone: map['phone'] as String,

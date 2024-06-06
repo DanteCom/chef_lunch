@@ -36,11 +36,37 @@ class _FoodPageState extends State<FoodPage> {
     return Scaffold(
       body: Column(
         children: [
-          Image.network(
-            widget.foodInfo.image,
-            width: double.infinity,
-            height: 350,
-            fit: BoxFit.cover,
+          Stack(
+            alignment: Alignment.topLeft,
+            children: [
+              Image.network(
+                widget.foodInfo.image,
+                width: double.infinity,
+                height: 350,
+                fit: BoxFit.cover,
+              ),
+              Positioned(
+                top: 50,
+                left: 20,
+                child: GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 10),
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.transparent.withOpacity(.2),
+                    ),
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 25),
           Expanded(
@@ -80,13 +106,19 @@ class _FoodPageState extends State<FoodPage> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: Text(
-                          quantity.toString(),
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w500,
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: SizedBox(
+                            width: 30,
+                            child: Text(
+                              quantity.toString(),
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                       ),

@@ -1,7 +1,14 @@
+import 'package:hive/hive.dart';
+
 import 'package:chef_lunch/models/menu_model.dart';
 
+part 'cart_model.g.dart';
+
+@HiveType(typeId: 1)
 class CartModel {
+  @HiveField(0)
   MenuModel foodInfo;
+  @HiveField(1)
   int quantity;
   CartModel({
     required this.foodInfo,

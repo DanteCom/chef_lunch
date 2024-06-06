@@ -1,17 +1,14 @@
-import 'package:chef_lunch/models/menu_model.dart';
+import 'package:chef_lunch/models/cart_model.dart';
+
 import 'package:chef_lunch/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyCartContainer extends StatelessWidget {
-  final int index;
-  final int quantity;
-  final MenuModel foodInfo;
+  final CartModel model;
   const MyCartContainer({
     super.key,
-    required this.foodInfo,
-    required this.quantity,
-    required this.index,
+    required this.model,
   });
   @override
   Widget build(BuildContext context) {
@@ -31,7 +28,7 @@ class MyCartContainer extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Image(
-              image: NetworkImage(foodInfo.image),
+              image: NetworkImage(model.foodInfo.image),
               height: 100,
               width: 100,
               fit: BoxFit.cover,
@@ -39,19 +36,26 @@ class MyCartContainer extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Text(
-            foodInfo.name,
+            model.foodInfo.name,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(width: 10),
           Text(
-            quantity.toString(),
+            model.quantity.toString(),
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           IconButton(
-              onPressed: () {
-                state.deleteFood(index);
-              },
-              icon: const Icon(Icons.remove))
+            onPressed: () {
+              state.decrement(model);
+            },
+            icon: const Icon(Icons.remove),
+          ),
+          IconButton(
+            onPressed: () {
+              state.increment(model);
+            },
+            icon: const Icon(Icons.add),
+          ),
         ],
       ),
     );

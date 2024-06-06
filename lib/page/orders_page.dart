@@ -14,7 +14,11 @@ class OrdersPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 15,
-        title: const Text('My Orders'),
+        centerTitle: true,
+        title: const Text(
+          'My Orders',
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
+        ),
       ),
       body: state.isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -35,13 +39,12 @@ class OrdersPage extends StatelessWidget {
                       Expanded(
                         child: ListView.separated(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 18, vertical: 12),
+                              horizontal: 13, vertical: 12),
                           separatorBuilder: (context, index) =>
                               const SizedBox(height: 20),
                           itemCount: foodList.length,
                           itemBuilder: (context, index) {
                             return MyOrderContainer(
-                              foodId: state.foodIds[index],
                               orderInfo: foodList[index],
                             );
                           },

@@ -2,6 +2,7 @@ import 'package:chef_lunch/models/order_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class OrderProvider extends ChangeNotifier {
   final orders = FirebaseFirestore.instance.collection('orders');
@@ -12,7 +13,6 @@ class OrderProvider extends ChangeNotifier {
   }
 
   bool isLoading = false;
-  List<String> foodIds = [];
 
   List<OrderModel> orderList = [];
   Future<void> getFoods({bool isInit = false}) async {
@@ -24,14 +24,17 @@ class OrderProvider extends ChangeNotifier {
       final foods = await orders.get();
       final newList = foods.docs.map(
         (DocumentSnapshot document) {
-          foodIds.add(document.id);
           final data = document.data() as Map<String, dynamic>;
-          return OrderModel.fromJson(data);
+          return OrderModel.fromJson(data, document.id);
         },
       ).toList();
       orderList = newList
           .where((element) => element.userId == _firebaseAuth.currentUser!.uid)
           .toList();
+      final formatter = DateFormat('yyyy-MM-dd – kk:mm');
+      orderList.sort(
+        (a, b) => formatter.parse(b.data).compareTo(formatter.parse(a.data)),
+      );
     } catch (e) {
       debugPrint('$e');
     } finally {
